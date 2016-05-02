@@ -8,6 +8,48 @@ var router = express.Router();
 
 var Usuario = require('mongoose').model('Usuario');
 
+router.post('/', function (req, res) {
+
+    var nombre = req.body.nombre;
+    var clave = req.body.clave;
+    var email = req.body.email;
+
+
+    Usuario.findOne({nombre: nombre}).exec(function (err, nombre) {
+
+        if(err){
+            return res.status(500).json({success: false, error: err});
+        }
+        if(nombre) {
+            return res.status(401).json({success: false, error: 'Sign up failed. User already exist'});
+        }
+
+        Usuario.findOne({email: email}).exec(function (err, email) {
+
+            if(err){
+                return res.status(500).json({success: false, error: err});
+            }
+            if(email) {
+                return res.status(401).json({success: false, error: 'Sign up failed. Email already exist'});
+            }
+
+            var usuario = new Usuario(req.body);
+
+            usuario.save(function (err, saved) {
+
+                if (err) {
+                    return next(err);
+                }
+
+                res.json({succes: true, saved: saved});
+            });
+
+        });
+        
+    });
+
+});
+
 router.post('/authenticate', function (req, res) {
 
     var user = req.body.user;
