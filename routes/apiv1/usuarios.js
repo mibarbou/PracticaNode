@@ -7,7 +7,9 @@ var express = require('express');
 var router = express.Router();
 
 var Usuario = require('mongoose').model('Usuario');
-var passwordHash = require('password-hash');
+
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 router.post('/', function (req, res) {
 
@@ -33,19 +35,26 @@ router.post('/', function (req, res) {
             if(email) {
                 return res.status(401).json({success: false, error: 'Sign up failed. Email already exist'});
             }
+            // hacemos el hash de la clave recibida que guardaremos en la BD
 
-            var hashedPassword = passwordHash.generate(clave);
-
-            var usuario = new Usuario({nombre: req.body.nombre, clave: hashedPassword, email: req.body.email});
-
-            usuario.save(function (err, saved) {
-
-                if (err) {
-                    return next(err);
+            bcrypt.hash(clave, saltRounds, function(err, hash) {
+                if(err) {
+                    return res.status(401).json({success: false, error: 'Sign up failed. something went wrong'});
                 }
 
-                res.json({succes: true, saved: saved});
+                var usuario = new Usuario({nombre: req.body.nombre, clave: hash, email: req.body.email});
+
+                usuario.save(function (err, saved) {
+
+                    if (err) {
+                        return next(err);
+                    }
+
+                    res.json({succes: true, saved: saved});
+                });
+                
             });
+
 
         });
         
@@ -67,17 +76,25 @@ router.post('/authenticate', function (req, res) {
             return res.status(401).json({success: false, error: 'Auth failed. User not found.'});
         }
         
-        if(passwordHash.verify(pass, user.clave))
+        // Verificamos que los hashes de la clave recibida y la guardada en BD no sean la misma
+      
 
-        if(!passwordHash.verify(pass, user.clave)) {
-            return res.status(401).json({success: false, error: 'Auth failed. Invalid password.'});
-        }
+        bcrypt.compare(pass, user.clave, function(err, verify) {
+            if(err){
+                return res.status(401).json({success: false, error: 'Log in failed. something went wrong'});
+            }
+            if(!verify){
+                return res.status(401).json({success: false, error: 'Auth failed. Invalid password.'});
+            }
 
-        var token = jwt.sign({ id: user._id}, config.jwt.secret, {
-            expiresIn: 60 * 24 * 2
+            var token = jwt.sign({ id: user._id}, config.jwt.secret, {
+                expiresIn: 60 * 24 * 2
+            });
+
+            res.json({success: true, token: token});
+            
         });
-
-        res.json({success: true, token: token});
+        
     });
 });
 
