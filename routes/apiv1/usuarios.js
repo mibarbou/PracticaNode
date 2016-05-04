@@ -7,6 +7,7 @@ var express = require('express');
 var router = express.Router();
 
 var Usuario = require('mongoose').model('Usuario');
+var passwordHash = require('password-hash');
 
 router.post('/', function (req, res) {
 
@@ -33,7 +34,9 @@ router.post('/', function (req, res) {
                 return res.status(401).json({success: false, error: 'Sign up failed. Email already exist'});
             }
 
-            var usuario = new Usuario(req.body);
+            var hashedPassword = passwordHash.generate(clave);
+
+            var usuario = new Usuario({nombre: req.body.nombre, clave: hashedPassword, email: req.body.email});
 
             usuario.save(function (err, saved) {
 
@@ -63,8 +66,10 @@ router.post('/authenticate', function (req, res) {
         if(!user) {
             return res.status(401).json({success: false, error: 'Auth failed. User not found.'});
         }
+        
+        if(passwordHash.verify(pass, user.clave))
 
-        if(user.clave !== pass) {
+        if(!passwordHash.verify(pass, user.clave)) {
             return res.status(401).json({success: false, error: 'Auth failed. Invalid password.'});
         }
 
