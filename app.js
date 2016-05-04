@@ -32,6 +32,7 @@ app.use('/', require('./routes/index'));
 
 // rutas del API
 app.use('/apiv1/usuarios', require('./routes/apiv1/usuarios'));
+app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
