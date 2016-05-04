@@ -8,5 +8,7 @@ var usuarioSchema = mongoose.Schema({
     clave: String
 });
 
+usuarioSchema.index({nombre: 1});
+usuarioSchema.index({email: 1});
 
 var Usuario = mongoose.model('Usuario', usuarioSchema);
