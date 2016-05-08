@@ -13,9 +13,9 @@ router.put('/', function (req, res, next) {
 
     var query = {'token':req.body.token};
 
-    PushToken.findOneAndUpdate({
-        query
-    },req.body,
+    PushToken.findOneAndUpdate(
+        query,
+        req.body,
         {upsert: true},
         function(err, saved){
             if(err) {

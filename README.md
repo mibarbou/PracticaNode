@@ -18,6 +18,6 @@ https://github.com/toymachiner62/node-mongo-seeds
 
 **Note:** Every time you run $ seed it will blow away all the data in your collections and re-populate them with whatever is in your /seeds directory.
 
-# API
+
 
 
