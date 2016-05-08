@@ -13,7 +13,8 @@ router.use(jwtAuth());
 router.get('/', function (req, res, next) {
     var nombre = req.query.nombre;
     var venta = req.query.venta;
-    var precio = req.query.precio
+    var precio = req.query.precio;
+    var tag = req.query.tag;
     var start = parseInt(req.query.start) || 0;
     var limit = parseInt(req.query.limit) || null;
     var sort = req.sort || null;
@@ -30,6 +31,10 @@ router.get('/', function (req, res, next) {
 
     if (typeof  precio !== 'undefined'){
         criteria.precio = precio;
+    }
+
+    if (typeof  tag !== 'undefined'){
+        criteria.tags = { "$all" : [tag]} ;
     }
 
     Anuncio.list(criteria, start, limit, sort, function (err, rows) {
