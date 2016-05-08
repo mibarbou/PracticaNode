@@ -8,6 +8,24 @@
   "nombre": "iPhone 3GS",
   "venta": false,
   "precio": 50.00,
-  "foto": "iphone.png",
+  "foto": "iphone.jpg",
   "tags": [ "lifestyle", "mobile"]
+}, {
+  "nombre": "Ferrari",
+  "venta": false,
+  "precio": 50000.00,
+  "foto": "ferrari.jpg",
+  "tags": [ "lifestyle", "motor"]
+}, {
+  "nombre": "Macbook Pro",
+  "venta": true,
+  "precio": 450.00,
+  "foto": "mac.jpg",
+  "tags": [ "work", "mobile"]
+}, {
+  "nombre": "Motocicleta",
+  "venta": false,
+  "precio": 4000.00,
+  "foto": "moto.jpg",
+  "tags": [ "lifestyle", "motor"]
 } ]

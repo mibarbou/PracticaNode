@@ -30,9 +30,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 
+// Obtengo el lenguaje leyendo cabecera x-lang
+app.use((req, res, next) => {
+  req.lang = req.get('x-lang') || 'en';
+  next();
+});
+
 // rutas del API
 app.use('/apiv1/usuarios', require('./routes/apiv1/usuarios'));
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/apiv1/pushtokens', require('./routes/apiv1/pushtokens'));
+app.use('/images/anuncios',express.static('public/images'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
