@@ -1,0 +1,11 @@
+[ {
+  "nombre": "admin",
+  "clave": "$2a$10$Vfaey4EB1Ek.CpLEJG1OG.KBAgosxHiIFkqv50jcflvy1sp29k7nO",
+  "email": "admin@email.com"
+},
+  {
+    "nombre": "user1",
+    "clave": "$2a$10$TY6wc.Vmg.7NAzt92BGQvO0wpLpeCtmACsGGL.sxn2dAIwQgh5zli",
+    "email": "user1@email.com"
+  }
+]
