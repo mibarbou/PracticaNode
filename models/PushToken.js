@@ -8,3 +8,5 @@ var pushTokenSchema = mongoose.Schema({
     token: String,
     usuario: String
 });
+
+var PushToken = mongoose.model('PushToken', pushTokenSchema);
