@@ -1,6 +1,20 @@
 # PracticaNode
 **Created by Michel Barbou Salvador**
-Práctica de node.js para el Master Keepcoding
+Práctica de node.js y Despliegue de servidores para el Master Keepcoding
+
+# DevOps
+
+- Public DNS AWS **ec2-54-165-134-164.compute-1.amazonaws.com**
+- Public IP **54.165.134.164**
+- Link Colección para *Postman*  **https://www.getpostman.com/collections/5d61912c78715b60aaa3**
+- Imágenes Estáticas Servidas pon *NGINX*
+    - Ejm. http://ec2-54-165-134-164.compute-1.amazonaws.com/images/bici.jpg 
+           http://ec2-54-165-134-164.compute-1.amazonaws.com/images/ferrari.jpg
+           
+    Los nombres de los archivos se obtienen del servicio *GET* de anuncios en el campo foto.
+
+    
+
 
 # Arranque conexión MongoDB
 
